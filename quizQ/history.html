@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz App</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #f0f4f7;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        nav {
+            background-color: #3498db;
+            padding: 15px;
+            text-align: center;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        nav ul li {
+            margin: 0 15px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: white;
+            font-size: 18px;
+        }
+
+        nav ul li a:hover {
+            color: #2980b9;
+        }
+
+        nav h1 {
+            font-size: 1.5rem;
+            color: white;
+            margin-bottom: 10px;
+        }
+
+        .main {
+            width: 100%;
+            min-height: 500px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            flex-direction: column;
+        }
+
+        #box {
+            width: 50%;
+            box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.1);
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            font-size: 2rem;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        #qbox {
+            font-size: 1.2rem;
+            color: #34495e;
+            margin-bottom: 20px;
+        }
+
+        .option {
+            padding: 15px;
+            margin: 10px 0;
+            background-color: #ecf0f1;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .option:hover {
+            background-color: #48c9b0;
+            box-shadow: 5px 5px 10px black;
+        }
+
+        .selected {
+            background-color: #48c9b0;
+            color: white;
+        }
+
+        .btn {
+            height: 40px;
+            width: 40%;
+            background-color: #3498db;
+            color: white;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px 5px;
+            transition: background-color 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #2980b9;
+        }
+
+        #submitBtn {
+            width: 50%;
+            background-color: #e74c3c;
+            margin-top: 20px;
+        }
+
+        #submitBtn:hover {
+            background-color: #c0392b;
+        }
+
+        #palette {
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            border-radius: 10px;
+            text-align: left;
+            font-size: 16px;
+            width: 50%;
+            font-family: 'Arial', sans-serif;
+            margin-top: 20px;
+        }
+
+        #palette {
+            position: absolute;
+            right: 10px;
+            top: 90px;
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            border-radius: 10px;
+            text-align: left;
+            font-size: 16px;
+            width: 20%;
+            font-family: 'Arial', sans-serif;
+        }
+
+        #palette h3 {
+            font-size: 1.5rem;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        #palette p {
+            font-size: 1rem;
+            color: #34495e;
+            margin-bottom: 10px;
+        }
+
+        .palette-item {
+            margin: 8px 0;
+        }
+
+        .marked {
+            color: #27ae60;
+            font-weight: bold;
+        }
+
+        .remaining {
+            color: #e67e22;
+            font-weight: bold;
+        }
+
+        footer {
+            background-color: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+            width: 100%;
+        }
+
+        footer p {
+            font-size: 16px;
+            margin-bottom: 15px;
+        }
+
+        footer .social-icons {
+            margin-top: 10px;
+        }
+
+        footer .social-icons a {
+            margin: 0 10px;
+            text-decoration: none;
+            color: white;
+        }
+
+        footer .social-icons a:hover {
+            color: #3498db;
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <h1>Quiz on History</h1>
+        <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Feedback</a></li>
+            <li><a href="#">Contact</a></li>
+        </ul>
+    </nav>
+
+    <div class="main">
+        <div id="box">
+            <h2 id="qbox">1) This is a Dummy question</h2>
+
+            <div id="option1" class="option" onclick="selectOption('a')">Option 1</div>
+            <div id="option2" class="option" onclick="selectOption('b')">Option 2</div>
+            <div id="option3" class="option" onclick="selectOption('c')">Option 3</div>
+            <div id="option4" class="option" onclick="selectOption('d')">Option 4</div>
+
+            <button class="btn" id="prevBtn" onclick="prevQuestion()">Prev</button>
+            <button class="btn" id="nextBtn" onclick="nextQuestion()">Next</button>
+        </div>
+
+        <div id="palette">
+            <h3>Question Palette</h3>
+            <p>Marked: <span id="markedCount">0</span></p>
+            <p>Remaining: <span id="remainingCount">4</span></p>
+        </div>
+
+        <button class="btn" id="submitBtn" onclick="submitQuiz()">Submit</button>
+    </div>
+
+    <footer>
+        <p>This quiz covers important topics in history such as world War, importand event, and discoveris date.</p>
+        <div class="social-icons">
+            <a href="#">Facebook</a>
+            <a href="#">Twitter</a>
+            <a href="#">LinkedIn</a>
+        </div>
+    </footer>
+
+    <script>
+        const question = [
+    {
+        'Que': 'Who was the first President of the United States?',
+        'a': 'George Washington',
+        'b': 'Thomas Jefferson',
+        'c': 'Abraham Lincoln',
+        'd': 'John Adams',
+        'correct': 'a'
+    },
+    {
+        'Que': 'In which year did the Titanic sink?',
+        'a': '1910',
+        'b': '1912',
+        'c': '1914',
+        'd': '1916',
+        'correct': 'b'
+    },
+    {
+        'Que': 'What was the primary cause of World War I?',
+        'a': 'Economic rivalry',
+        'b': 'Colonial expansion',
+        'c': 'Militarism',
+        'd': 'Assassination of Archduke Ferdinand',
+        'correct': 'd'
+    },
+    {
+        'Que': 'Which ancient civilization built the pyramids?',
+        'a': 'Maya',
+        'b': 'Greek',
+        'c': 'Egyptian',
+        'd': 'Roman',
+        'correct': 'c'
+    },
+    {
+        'Que': 'Who wrote the Declaration of Independence?',
+        'a': 'James Madison',
+        'b': 'Benjamin Franklin',
+        'c': 'Thomas Jefferson',
+        'd': 'John Hancock',
+        'correct': 'c'
+    },
+    {
+        'Que': 'What was the name of the ship that carried the Pilgrims to America?',
+        'a': 'Mayflower',
+        'b': 'Nina',
+        'c': 'Pinta',
+        'd': 'Santa Maria',
+        'correct': 'a'
+    },
+    {
+        'Que': 'Which war was fought between the North and South regions in the United States?',
+        'a': 'World War I',
+        'b': 'World War II',
+        'c': 'Civil War',
+        'd': 'Revolutionary War',
+        'correct': 'c'
+    },
+    {
+        'Que': 'Who was the first female Prime Minister of the United Kingdom?',
+        'a': 'Theresa May',
+        'b': 'Margaret Thatcher',
+        'c': 'Angela Merkel',
+        'd': 'Indira Gandhi',
+        'correct': 'b'
+    },
+    {
+        'Que': 'What was the main purpose of the Berlin Wall?',
+        'a': 'To promote trade',
+        'b': 'To divide East and West Berlin',
+        'c': 'To prevent immigration',
+        'd': 'To protect from invasions',
+        'correct': 'b'
+    },
+    {
+        'Que': 'Who discovered penicillin?',
+        'a': 'Louis Pasteur',
+        'b': 'Alexander Fleming',
+        'c': 'Marie Curie',
+        'd': 'Joseph Lister',
+        'correct': 'b'
+    }
+];
+
+
+
+        let index = 0;
+        let total = question.length;
+        let markedQuestions = [];
+        let selectedAnswer = null;
+
+        const qbox = document.getElementById('qbox');
+
+        const markedCountElem = document.getElementById('markedCount');
+        const remainingCountElem = document.getElementById('remainingCount');
+
+        const loadQuestion = () => {
+            resetOptions();
+            const data = question[index];
+            qbox.innerText = `${index + 1}) ${data.Que}`;
+            document.getElementById('option1').innerText = data.a;
+            document.getElementById('option2').innerText = data.b;
+            document.getElementById('option3').innerText = data.c;
+            document.getElementById('option4').innerText = data.d;
+
+            if (markedQuestions[index]) {
+                selectOption(markedQuestions[index]);
+            }
+
+            updatePalette();
+        };
+
+        const nextQuestion = () => {
+            markCurrentQuestion();
+            if (index < total - 1) {
+                index++;
+                loadQuestion();
+            }
+        };
+
+        const prevQuestion = () => {
+            if (index > 0) {
+                index--;
+                loadQuestion();
+            }
+        };
+
+        const markCurrentQuestion = () => {
+            if (selectedAnswer) {
+                markedQuestions[index] = selectedAnswer;
+            }
+        };
+
+        const selectOption = (option) => {
+            resetOptions();
+            selectedAnswer = option;
+            document.getElementById(`option${option.charCodeAt(0) - 96}`).classList.add('selected'); // color the selected option
+        };
+
+        const resetOptions = () => {
+            const options = document.querySelectorAll('.option');
+            options.forEach(option => {
+                option.classList.remove('selected');
+            });
+        };
+
+        const updatePalette = () => {
+            markedCountElem.innerText = markedQuestions.filter(q => q).length;
+            remainingCountElem.innerText = total - markedCountElem.innerText;
+        };
+
+        const submitQuiz = () => {
+            markCurrentQuestion();
+            let correctAnswers = 0;
+            markedQuestions.forEach((answer, idx) => {
+                if (answer === question[idx].correct) {
+                    correctAnswers++;
+                }
+            });
+            document.getElementById("box").innerHTML = `<h3>Thank you for playing!</h3>
+            <h2>You got ${correctAnswers} / ${total} correct.</h2>`;
+        };
+
+
+
+
+        // Initial call to load the first question
+        loadQuestion();
+    </script>
+</body>
+</html>

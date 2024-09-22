@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Page</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 400px; margin: 0 auto; padding: 20px; }
+        input { width: 100%; padding: 8px; margin: 8px 0; }
+        button { width: 100%; padding: 10px; background-color: #4CAF50; color: white; border: none; cursor: pointer; }
+        .error { color: red; font-size: 0.9em; }
+    </style>
+</head>
+<body>
+    <h2>Log in form</h2>
+    <form id="signinForm" onsubmit="return validateForm()">
+        <input type="text" id="username" placeholder="Username" required>
+        <div id="usernameError" class="error"></div>
+        <input type="email" id="email" placeholder="Email" required>
+        <div id="emailError" class="error"></div>
+        <input type="password" id="password" placeholder="Password" required>
+        <div id="passwordError" class="error"></div>
+        <button type="submit"><b>Sign in</b></button>
+        <div style="padding: 20px;">
+            <a href="register.html" style="text-decoration:none;">Sign up &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &nbsp;</a>             
+            <a href="forget.html" style="text-decoration:none;">Forget password</a>
+        </div>
+        <div id="errorMessage" class="error"></div>
+    </form>
+    <script>
+        const signinForm = document.getElementById('signinForm');
+        const errorMessage = document.getElementById('errorMessage');
+        
+        const validUsername = 'user123';
+        const validEmail = 'user@gmail.com';
+        const validPassword = 'pass123';
+
+        signinForm.addEventListener('submit', function(e) 
+        {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            if (email === validEmail && username === validUsername && password === validPassword) {
+                errorMessage.textContent = '';
+                alert('You have successfully signed in!');
+                window.location.href = 'https://www.vignan.ac.in';
+            } 
+            else 
+            {
+                errorMessage.textContent = 'Invalid email, username, or password. Please try again.';
+            }
+        });
+    </script>
+</body>
+</html>
